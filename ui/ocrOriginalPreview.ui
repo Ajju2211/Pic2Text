@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PIC2TEXT</class>
+ <widget class="QMainWindow" name="PIC2TEXT">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1471</width>
+    <height>725</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PIC2TEXT</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../ICONS/LOGO.png</normaloff>../ICONS/LOGO.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>9.000000000000000</double>
+  </property>
+  <property name="toolTip">
+   <string/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="conv">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>630</y>
+      <width>191</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Franklin Gothic Demi</family>
+      <pointsize>26</pointsize>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>Click to run </string>
+    </property>
+    <property name="text">
+     <string>CONVERT</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>630</y>
+      <width>191</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Nirmala UI Semilight</family>
+      <pointsize>22</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Select language of the image file</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>English</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Hindi</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Tamil</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Telugu</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Urdu</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>640</y>
+      <width>351</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Franklin Gothic Demi</family>
+      <pointsize>26</pointsize>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>Select document langauge type</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-2</number>
+    </property>
+    <property name="text">
+     <string>SELECT LANGUAGE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="originalpreview">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>1341</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
