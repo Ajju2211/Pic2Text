@@ -7,18 +7,21 @@ import subprocess
 Building Executables
 '''
 print('Started build...')
-
 build = subprocess.Popen(["pyinstaller", "--onefile", "--windowed", "--icon=logo.ico", "Pic2Text.py"],
-                        stdin =subprocess.PIPE,
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
                         universal_newlines=True,
                         bufsize=0)
+
+# build = subprocess.Popen(["pyinstaller", "--onefile", "--windowed", "--icon=logo.ico", "Pic2Text.py"],
+#                         stdin =subprocess.PIPE,
+#                         stdout=subprocess.PIPE,
+#                         stderr=subprocess.PIPE,
+#                         universal_newlines=True,
+#                         bufsize=0)
  
-# Send OP
-build.stdin.write("uname -a\n")
-build.stdin.write("uptime\n")
-build.stdin.close()
+# # Send OP
+# build.stdin.write("uname -a\n")
+# build.stdin.write("uptime\n")
+# build.stdin.close()
 
 # Fetch output
 for line in build.stdout:

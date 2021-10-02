@@ -11,7 +11,6 @@ import pytesseract
 from PIL import Image
 os.environ['TESSDATA_PREFIX'] = os.path.join('Tesseract-OCR','tessdata')
 pytesseract.pytesseract.tesseract_cmd = os.path.join('Tesseract-OCR\\tesseract.exe')
-from textblob import TextBlob
 from cam import Cam
 
 class App:
@@ -23,7 +22,11 @@ class App:
     def ocr(self):
         self.langCode = self.langsMap1[self.langName]
         self.text = ""
+        # custom_config = r'--oem 3 --psm 6'
         self.text = pytesseract.image_to_string(Image.fromarray(self.croppedImage),lang=self.langCode)
+        # demo.stopAnimation()
+        # window.close()
+        print(self.text)
 def numpyQImage(image):
     qImg = QtGui.QImage()
     if image.dtype == np.uint8:
@@ -129,24 +132,33 @@ class Preview(QMainWindow):
         self.originalpreview.resize(pixmap.width(),pixmap.height())
         self.comboBox.currentIndexChanged.connect(self.selectionChange)
         self.conv.clicked.connect(self.gotoscreen3)
-        
+        self.back.clicked.connect(self.goBack)
+
+    def goBack(self):
+        mainWin = MainWindow()
+        widget.addWidget(mainWin)
+        widget.setCurrentIndex(widget.currentIndex()-1)        
     def selectionChange(self):
         self.app.langName =self.comboBox.itemText(self.comboBox.currentIndex())
     def gotoscreen3(self):
         opWin = Output(self.app)
-        self.app.ocr()
         widget.addWidget(opWin)
         widget.setCurrentIndex(widget.currentIndex()+1)
 class Output(QMainWindow):
     def __init__(self,app):
         super(Output, self).__init__()
-        loadUi("ui/ocrOutput.ui",self)
         self.app = app
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit.setGeometry(QtCore.QRect(20, 10, 1331, 561))
-        self.plainTextEdit.setInputMethodHints(QtCore.Qt.ImhMultiLine)
-        self.plainTextEdit.setObjectName("plainTextEdit")
-        self.plainTextEdit.setPlainText(self.app.text)
+        loadUi("ui/ocrOutput.ui",self)
+        font = QtGui.QFont()
+        font.setFamily("Poor Richard")
+        font.setPointSize(22)
+        self.textEdit.setFont(font)
+        self.textEdit.setReadOnly(False)
+        # self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
+        # self.plainTextEdit.setGeometry(QtCore.QRect(20, 10, 1331, 561))
+        # self.plainTextEdit.setInputMethodHints(QtCore.Qt.ImhMultiLine)
+        # self.plainTextEdit.setObjectName("plainTextEdit")
+        # self.textBrowser.setHtml(self.app.text)
         self.message = QtWidgets.QLabel(self.centralwidget)
         self.message.setGeometry(QtCore.QRect(180, 620, 241, 31))
         font = QtGui.QFont()
@@ -157,15 +169,24 @@ class Output(QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         self.message.setText(_translate("PIC2TEXT", "Ready to Download"))
         self.downloadB.clicked.connect(self.downloadFile)
-    
+        self.back.clicked.connect(self.goBack)
+        self.retranslateUi()
+    def goBack(self):
+        second = Preview(self.app)
+        widget.addWidget(second)
+        widget.setCurrentIndex(widget.currentIndex()-1)
+    def retranslateUi(self):
+        # self.textBrowser.setHtml(_translate("PIC2TEXT",self.app.text))
+        self.app.ocr()
+        self.textEdit.setHtml('''{}'''.format((self.app.text)))
     def downloadFile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getSaveFileName(self,"Save File","","All Files (*);;Text Files (*.txt)", options=options)
         if not fileName:
             return
-        file2=open(fileName+".txt",'w')
-        file2.write(self.app.text)
+        file2=open(fileName,'w')
+        file2.write(self.textEdit.toPlainText())
         file2.close()
 
 
@@ -177,8 +198,9 @@ icon = QtGui.QIcon()
 icon.addPixmap(QtGui.QPixmap("ICONS/LOGO.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
 widget.setWindowIcon(icon)
 widget.addWidget(mainWin)
-widget.setFixedHeight(800)
-widget.setFixedWidth(1050)
+widget.setMinimumHeight(800)
+widget.setMinimumWidth(1050)
+widget.showMaximized()
 widget.show()
 
 try:
